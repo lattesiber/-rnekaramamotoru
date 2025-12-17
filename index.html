@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Örnek Tarayıcı</title>
+
+<script src="400search.js"></script>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    background:#020617;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:Arial, sans-serif;
+    color:white;
+}
+
+.box{
+    background:#020617;
+    padding:30px;
+    width:420px;
+    border-radius:14px;
+    box-shadow:0 0 20px black;
+    text-align:center;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    font-size:15px;
+    outline:none;
+}
+
+ul{
+    list-style:none;
+    padding:0;
+    margin-top:15px;
+    max-height:200px;
+    overflow-y:auto;
+}
+
+li{
+    background:#020617;
+    border:1px solid #1e293b;
+    padding:10px;
+    margin-bottom:8px;
+    border-radius:8px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+li:hover{
+    background:#1e293b;
+}
+
+.info{
+    margin-top:20px;
+    font-size:12px;
+    color:#cbd5f5;
+}
+
+.info a{
+    color:#60a5fa;
+    text-decoration:none;
+}
+</style>
+</head>
+
+<body>
+<div class="box">
+    <h1>örnek site</h1>
+
+    <input placeholder="buraya yazın" oninput="runSearch(this.value)">
+
+    <ul id="result"></ul>
+
+    <div class="info">
+        bu arama motoru tamamen yapılmamaışdır<br>
+        <a href="https://lattesiber.notion.site/400search-nedir-2cc4c372db1c801aad0bcd9187cc5486" target="_blank">
+            daha fazla bilgi için buraya tıklayınız
+        </a>
+    </div>
+</div>
+
+<script>
+function runSearch(q){
+    const resultBox = document.getElementById("result");
+    resultBox.innerHTML = "";
+
+    if (!q) return;
+
+    // 400search.js fonksiyonunu çağır
+    const results = search400(q);
+
+    // Eğer dizi değilse çık
+    if (!Array.isArray(results)) return;
+
+    results.forEach(item=>{
+        // item = { title:"", url:"" } varsayımı
+        const li = document.createElement("li");
+        li.textContent = item.title || item.name || item.url;
+
+        li.onclick = () => {
+            window.open(item.url, "_blank");
+        };
+
+        resultBox.appendChild(li);
+    });
+}
+</script>
+
+</body>
+</html>
